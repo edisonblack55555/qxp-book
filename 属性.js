@@ -11,6 +11,10 @@ var Type_Data={
         "Name_cn": "火",
         "Name": "fire"
     },
+    "4": {
+        "Name_cn": "飞行",
+        "Name": "fly"
+    },
     "5": {
         "Name_cn": "电",
         "Name": "electric"
