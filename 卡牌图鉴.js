@@ -966,7 +966,7 @@ var Card_Data={
         "Hp": 2,
         "Fee": 3,
         "Wake": 0,
-        "Effect": "攻击时获得1张金币卡",
+        "Effect": "攻击时使己方同排其他飞行系精灵获得+1/+1",
         "CardId": 10,
         "Type": 4,
         "Kind": "精灵牌"
@@ -1062,7 +1062,7 @@ var Card_Data={
         "Hp": 4,
         "Fee": 3,
         "Wake": 0,
-        "Effect": "连击；攻击时使己方同排其他飞行系精灵获得+1/+1",
+        "Effect": "攻击时获得1张金币卡",
         "CardId": 69,
         "Type": 4,
         "Kind": "精灵牌"
@@ -2334,7 +2334,7 @@ var Card_Data={
         "Hp": 4,
         "Fee": 3,
         "Wake": 1,
-        "Effect": "攻击时获得2张金币卡",
+        "Effect": "攻击时使己方同排其他飞行系精灵获得+2/+2",
         "CardId": 10,
         "Type": 4,
         "Kind": "精灵牌"
@@ -2430,7 +2430,7 @@ var Card_Data={
         "Hp": 8,
         "Fee": 3,
         "Wake": 1,
-        "Effect": "连击；攻击时使己方同排其他飞行系精灵获得+2/+2",
+        "Effect": "攻击时获得2张金币卡",
         "CardId": 69,
         "Type": 4,
         "Kind": "精灵牌"
@@ -3102,7 +3102,7 @@ var Card_Data={
         "Hp": 1,
         "Fee": 3,
         "Wake": 0,
-        "Effect": "被视为拥有所有系别",
+        "Effect": "强毒；被视为拥有所有系别",
         "CardId": 10002,
         "Type": 999,
         "Kind": "衍生精灵"
@@ -3222,7 +3222,7 @@ var Card_Data={
         "Hp": 2,
         "Fee": 3,
         "Wake": 1,
-        "Effect": "被视为拥有所有系别",
+        "Effect": "强毒；被视为拥有所有系别",
         "CardId": 10002,
         "Type": 999,
         "Kind": "衍生精灵"
