@@ -19,9 +19,17 @@ var Type_Data={
         "Name_cn": "电",
         "Name": "electric"
     },
+    "6": {
+        "Name_cn": "机械",
+        "Name": "steel"
+    },
     "7": {
         "Name_cn": "地面",
         "Name": "ground"
+    },
+    "15": {
+        "Name_cn": "龙",
+        "Name": "dragon"
     },
     "999": {
         "Name_cn": "无",
