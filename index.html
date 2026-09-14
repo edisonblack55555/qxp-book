@@ -1423,12 +1423,380 @@
             transition: all 0.25s;
         }
 
+        /* 赛季1：保持 v7 原始配色（基础规则/1级规则/2级规则） */
         .season-rule-item.tier-0 { border-left-color: var(--primary); }
         .season-rule-item.tier-1 { border-left-color: var(--green); }
         .season-rule-item.tier-2 { border-left-color: var(--purple); }
         .season-rule-item.tier-3 { border-left-color: var(--red); }
         .season-rule-item.tier-4 { border-left-color: var(--yellow); }
         .season-rule-item.tier-5 { border-left-color: var(--blue); }
+
+        /* 赛季2：品质配色（普通-灰 / 稀有-金 / 传说-彩） */
+        .season-page.season-2 .season-rule-item.tier-0 {
+            border-left-color: #9e9e9e; /* 普通 - 灰 */
+        }
+        .season-page.season-2 .season-rule-item.tier-1 {
+            border-left-color: #ffb300; /* 稀有 - 金 */
+            background: linear-gradient(90deg, rgba(255, 179, 0, 0.10) 0%, var(--bg) 30%);
+        }
+        .season-page.season-2 .season-rule-item.tier-2 {
+            border-left-color: #e91e63; /* 传说 - 彩（左边框取主色，配合彩虹徽章） */
+            background: linear-gradient(90deg, rgba(233, 30, 99, 0.10) 0%, var(--bg) 30%);
+            border-image: linear-gradient(180deg, #e91e63, #9c27b0, #3f51b5, #2196f3, #4caf50, #ffeb3b, #ff9800, #e91e63) 1;
+        }
+
+        /* 层级徽章：在合并/列显示模式中使用 */
+        .season-tier-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.4;
+            white-space: nowrap;
+        }
+        /* 赛季1 徽章配色（与 v7 一致） */
+        .season-tier-badge.tier-0 { background: var(--primary); }
+        .season-tier-badge.tier-1 { background: var(--green); }
+        .season-tier-badge.tier-2 { background: var(--purple); }
+        .season-tier-badge.tier-3 { background: var(--red); }
+        .season-tier-badge.tier-4 { background: var(--yellow); color: #3e2723; }
+        .season-tier-badge.tier-5 { background: var(--blue); }
+
+        /* 赛季2 徽章配色：品质色（普通-灰 / 稀有-金 / 传说-彩） */
+        .season-page.season-2 .season-tier-badge.tier-0 {
+            background: #9e9e9e; /* 普通 - 灰 */
+        }
+        .season-page.season-2 .season-tier-badge.tier-1 {
+            background: linear-gradient(135deg, #ffb300 0%, #ff8f00 100%); /* 稀有 - 金 */
+            color: #3e2723;
+        }
+        .season-page.season-2 .season-tier-badge.tier-2 {
+            background: linear-gradient(135deg, #e91e63, #9c27b0, #3f51b5, #2196f3, #4caf50, #ffeb3b, #ff9800);
+            background-size: 200% 200%;
+            color: #fff;
+            animation: season-rainbow-shift 6s ease infinite;
+        }
+
+        @keyframes season-rainbow-shift {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ==================== Season Switcher (赛季切换) ==================== */
+        .season-switcher {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 12px 30px;
+            border-bottom: 1px solid var(--border);
+            background: var(--card-bg);
+        }
+
+        .season-switcher-label {
+            font-size: 13px;
+            color: var(--text-light);
+            font-weight: 500;
+            margin-right: 4px;
+        }
+
+        .season-switcher-tab {
+            padding: 6px 16px;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: all 0.25s;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .season-switcher-tab:hover {
+            border-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .season-switcher-tab.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-color: var(--primary-dark);
+            color: #fff;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .season-switcher-latest {
+            display: inline-block;
+            padding: 1px 6px;
+            background: var(--green);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            border-radius: 8px;
+            line-height: 1.4;
+        }
+
+        .season-switcher-tab.active .season-switcher-latest {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* ==================== Tag Legend (标签说明，仅赛季2显示) ==================== */
+        .season-tag-legend {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px 30px;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .season-tag-legend-label {
+            font-weight: 500;
+            color: var(--text);
+            margin-right: 4px;
+        }
+
+        .season-tag-legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 10px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 11.5px;
+        }
+
+        .season-tag-legend-arrow {
+            color: var(--text-light);
+            opacity: 0.5;
+            font-size: 11px;
+        }
+
+        @media (max-width: 768px), (orientation: portrait) {
+            .season-switcher { padding: 10px 15px; gap: 6px; }
+            .season-switcher-tab { padding: 5px 12px; font-size: 12px; }
+            .season-tag-legend { padding: 8px 15px; gap: 6px; }
+            .season-tag-legend-item { font-size: 10.5px; padding: 2px 8px; }
+        }
+
+        /* ==================== Season 2 Flat Layout (赛季2 扁平结构，参考图片风格) ==================== */
+        /* 卡片网格（响应式：自适应列数，最小宽度 280px） */
+        .season-flat-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 14px;
+            padding: 20px 30px 30px;
+        }
+
+        /* 单张规则卡片：参考图片的科技感设计
+         * - 顶部彩色品质带（替代图片中的梯形标签）
+         * - 卡片背景为深色渐变（夜间）/ 浅色渐变（日间）
+         * - 底部粗品质色边框（替代图片中的白色底座）
+         */
+        .season-flat-card {
+            position: relative;
+            background: linear-gradient(180deg, var(--card-bg) 0%, var(--bg) 100%);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            border-bottom: 5px solid var(--primary); /* 底部粗边框（品质色覆盖） */
+            padding: 12px 16px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: all 0.25s;
+            overflow: hidden;
+            min-height: 160px;
+        }
+
+        .season-flat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px var(--shadow);
+            border-color: var(--primary-light);
+        }
+
+        /* 品质配色（底部粗边框 + 顶部装饰条） */
+        .season-flat-card.quality-1 {
+            border-bottom-color: #9e9e9e; /* 普通 - 灰 */
+        }
+        .season-flat-card.quality-2 {
+            border-bottom-color: #ffb300; /* 稀有 - 金 */
+            background: linear-gradient(180deg, var(--card-bg) 0%, rgba(255, 179, 0, 0.06) 100%);
+        }
+        .season-flat-card.quality-3 {
+            border-bottom-color: #e91e63; /* 传说 - 彩 */
+            background: linear-gradient(180deg, var(--card-bg) 0%, rgba(233, 30, 99, 0.06) 100%);
+            border-image: linear-gradient(180deg, var(--border) 0%, var(--border) 60%, #e91e63 70%, #9c27b0 80%, #3f51b5 90%, #2196f3 100%) 1;
+        }
+
+        /* 顶部：品质徽章 + 类型标签 */
+        .season-flat-card-tag-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        /* 品质徽章（小圆角胶囊） */
+        .season-flat-quality-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.5;
+            white-space: nowrap;
+        }
+        .season-flat-quality-badge.quality-1 {
+            background: #9e9e9e; /* 普通 - 灰 */
+        }
+        .season-flat-quality-badge.quality-2 {
+            background: linear-gradient(135deg, #ffb300 0%, #ff8f00 100%); /* 稀有 - 金 */
+            color: #3e2723;
+        }
+        .season-flat-quality-badge.quality-3 {
+            background: linear-gradient(135deg, #e91e63, #9c27b0, #3f51b5, #2196f3, #4caf50, #ffeb3b, #ff9800);
+            background-size: 200% 200%;
+            color: #fff;
+            animation: season-rainbow-shift 6s ease infinite;
+        }
+
+        /* 类型标签（右上角，浅色背景） */
+        .season-flat-type-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--tag-bg);
+            color: var(--primary);
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* 卡片名称（居中、加粗） */
+        .season-flat-card-name {
+            font-size: 15.5px;
+            font-weight: 700;
+            color: var(--text);
+            text-align: center;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+
+        /* 元数据行（子类 + 系列号） */
+        .season-flat-card-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        .season-flat-sub {
+            display: inline-block;
+            padding: 1px 7px;
+            background: var(--bg);
+            color: var(--text-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 10.5px;
+        }
+
+        .season-flat-series {
+            margin-left: auto;
+            font-size: 10.5px;
+            color: var(--text-light);
+            opacity: 0.7;
+        }
+
+        /* 效果描述（左对齐，自动换行） */
+        .season-flat-card-effect {
+            font-size: 12.5px;
+            line-height: 1.65;
+            color: var(--text-light);
+            white-space: pre-wrap;
+            word-break: break-word;
+            text-align: left;
+            flex: 1;
+        }
+
+        /* ==================== Season 2 Filter Modal Buttons (品质筛选按钮) ==================== */
+        .season2-filter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 品质小圆点（在筛选按钮中显示） */
+        .season2-filter-quality-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .season2-filter-quality-dot.quality-1 {
+            background: #9e9e9e; /* 普通 - 灰 */
+        }
+        .season2-filter-quality-dot.quality-2 {
+            background: linear-gradient(135deg, #ffb300 0%, #ff8f00 100%); /* 稀有 - 金 */
+        }
+        .season2-filter-quality-dot.quality-3 {
+            background: linear-gradient(135deg, #e91e63, #9c27b0, #3f51b5, #2196f3, #4caf50, #ffeb3b, #ff9800);
+            background-size: 200% 200%;
+            animation: season-rainbow-shift 6s ease infinite;
+        }
+
+        /* 激活态：品质按钮带品质色边框 */
+        .filter-grid-btn.season2-filter-btn.quality-1.active {
+            background: #9e9e9e;
+            border-color: #9e9e9e;
+            color: #fff;
+        }
+        .filter-grid-btn.season2-filter-btn.quality-2.active {
+            background: linear-gradient(135deg, #ffb300 0%, #ff8f00 100%);
+            border-color: #ffb300;
+            color: #3e2723;
+        }
+        .filter-grid-btn.season2-filter-btn.quality-3.active {
+            background: linear-gradient(135deg, #e91e63, #9c27b0, #3f51b5, #2196f3, #4caf50, #ffeb3b, #ff9800);
+            background-size: 200% 200%;
+            border-color: #e91e63;
+            color: #fff;
+            animation: season-rainbow-shift 6s ease infinite;
+        }
+
+        /* 夜间模式：卡片更深沉 */
+        .night-mode .season-flat-card {
+            background: linear-gradient(180deg, var(--card-bg) 0%, rgba(0, 0, 0, 0.15) 100%);
+        }
+        .night-mode .season-flat-card.quality-2 {
+            background: linear-gradient(180deg, var(--card-bg) 0%, rgba(255, 179, 0, 0.12) 100%);
+        }
+        .night-mode .season-flat-card.quality-3 {
+            background: linear-gradient(180deg, var(--card-bg) 0%, rgba(233, 30, 99, 0.12) 100%);
+        }
+
+        @media (max-width: 768px), (orientation: portrait) {
+            .season-flat-list {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 14px 15px 20px;
+            }
+            .season-flat-card-name { font-size: 14.5px; }
+            .season-flat-card-effect { font-size: 12px; line-height: 1.6; }
+        }
 
         .season-rule-item:hover {
             transform: translateX(4px);
@@ -5314,7 +5682,8 @@
     <script src="人物技能.js"></script>
     <script src="效果注释.js"></script>
     <script src="卡组推荐.js"></script>
-    <script src="赛季规则.js"></script>
+    <script src="赛季_1_规则.js"></script>
+    <script src="赛季_2_规则.js"></script>
     
     <!-- Header -->
     <div class="header">
@@ -5515,6 +5884,34 @@
         </div>
     </div>
 
+    <!-- Season 2 Filter Modal -->
+    <div class="filter-modal-overlay" id="season2FilterModal" onclick="closeSeason2FilterModal(event)">
+        <div class="filter-modal" onclick="event.stopPropagation()">
+            <div class="filter-modal-header">
+                <span>🔍 赛季规则筛选</span>
+                <button class="filter-modal-close" onclick="closeSeason2FilterModal()">&times;</button>
+            </div>
+            <div class="filter-modal-body">
+                <div class="filter-modal-section">
+                    <div class="filter-modal-section-title">品质</div>
+                    <div class="filter-type-grid" id="season2FilterQualityGrid">
+                        <!-- 动态生成 -->
+                    </div>
+                </div>
+                <div class="filter-modal-section">
+                    <div class="filter-modal-section-title">类型</div>
+                    <div class="filter-type-grid" id="season2FilterTypeGrid">
+                        <!-- 动态生成 -->
+                    </div>
+                </div>
+            </div>
+            <div class="filter-modal-footer">
+                <button class="filter-footer-btn reset" onclick="resetSeason2Filters()">重置</button>
+                <button class="filter-footer-btn confirm" onclick="applySeason2Filters()">确定</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Character Detail Modal -->
     <div class="character-detail-overlay" id="characterDetailModal" onclick="closeCharacterDetailModal(event)">
         <div class="character-detail-modal" onclick="event.stopPropagation()">
@@ -5617,10 +6014,12 @@
         
         let deckData = {}; // 卡组推荐数据
         let deckList = []; // 卡组列表
-        let seasonData = {}; // 赛季规则数据
-        let currentSeasonRule = ''; // 当前选中的规则 key（如 '1'）
-        let currentSeasonTier = ''; // 当前选中的层级 key（如 '0'）
-        let seasonViewMode = 'nav'; // 赛季规则视图模式：'nav' 导航栏 / 'merged' 合并竖排 / 'columns' 列显示
+        let seasonsData = {}; // 多赛季规则数据：{ '1': Season_1_Data, '2': Season_2_Data, ... }
+        let currentSeason = ''; // 当前选中的赛季 key（如 '2'），默认为最新赛季
+        let currentSeasonRule = ''; // 当前选中的规则 key（如 '1'）— 仅赛季1嵌套结构使用
+        let currentSeasonTier = ''; // 当前选中的层级 key（如 '0'）— 仅赛季1嵌套结构使用
+        let season2FilterState = { qualities: [], types: [] }; // 赛季2 筛选状态：qualities(1/2/3) + types(1/2/3/4)
+        let seasonViewMode = 'nav'; // 赛季规则视图模式：'nav' 导航栏 / 'merged' 合并竖排 / 'columns' 列显示 — 仅赛季1使用
         let deckViewMode = 'list'; // 卡组视图模式：list 或 grid
         let currentDeck = null; // 当前选中的卡组
         let currentDeckIndex = 0; // 当前卡牌索引（用于卡组详情）
@@ -5682,12 +6081,26 @@
                 console.error('未找到 Cards_Data 变量，请检查 卡组推荐.js 是否正确引入');
             }
             
-            // 加载赛季规则数据
-            if (typeof Season_Data !== 'undefined') {
-                seasonData = Season_Data;
-                console.log('赛季规则数据加载成功，共 ' + Object.keys(seasonData).length + ' 条规则');
+            // 加载多赛季规则数据
+            // 按赛季编号升序加载所有已注入的 Season_N_Data 变量，默认选中编号最大的（最新）赛季
+            seasonsData = {};
+            const seasonVarPattern = /^Season_(\d+)_Data$/;
+            for (const varName in window) {
+                const match = varName.match(seasonVarPattern);
+                if (match) {
+                    const seasonKey = match[1];
+                    seasonsData[seasonKey] = window[varName];
+                    console.log('赛季 ' + seasonKey + ' 规则数据加载成功，共 ' + Object.keys(window[varName]).length + ' 条规则');
+                }
+            }
+            if (Object.keys(seasonsData).length === 0) {
+                console.error('未找到 Season_N_Data 变量，请检查 赛季_1_规则.js / 赛季_2_规则.js 是否正确引入');
             } else {
-                console.error('未找到 Season_Data 变量，请检查 赛季规则.js 是否正确引入');
+                // 默认选择最新赛季（编号最大的）
+                currentSeason = Object.keys(seasonsData)
+                    .sort((a, b) => parseInt(a) - parseInt(b))
+                    .pop();
+                console.log('默认选中赛季：' + currentSeason);
             }
             
             // 从localStorage读取人物卡牌列数
@@ -5854,7 +6267,10 @@
             document.getElementById('characterBadge').textContent = charactersList.length;
             document.getElementById('effectBadge').textContent = effectCount;
             document.getElementById('deckBadge').textContent = Object.keys(deckData).length || 0;
-            document.getElementById('seasonBadge').textContent = Object.keys(seasonData).length || 0;
+            // 赛季 badge 显示当前（最新）赛季的规则条数
+            const latestSeason = Object.keys(seasonsData).sort((a, b) => parseInt(a) - parseInt(b)).pop();
+            const latestSeasonData = seasonsData[latestSeason] || {};
+            document.getElementById('seasonBadge').textContent = Object.keys(latestSeasonData).length || 0;
         }
         
         // Get type info
@@ -6126,10 +6542,127 @@
         }
         
 
+        // ==================== 赛季元数据配置表 ====================
+        // 硬编码赛季列表：key → { 赛季名, 规则名 }。后续新增/修改赛季只需在此处更新即可。
+        // 注意：key 必须与 Season_N_Data 中的 N 一致（如 '1' 对应 Season_1_Data）。
+        //   - name:     赛季名（显示在赛季切换栏，如 "元素王座" / "凛冬之冠"）
+        //   - ruleName: 规则名（显示在页面标题，如 "元素王座" / "强化芯片"）
+        const seasonMeta = {
+            '1': { name: '元素王座', ruleName: '元素圣域' },
+            '2': { name: '凛冬之冠', ruleName: '强化芯片' },
+            // '3': { name: 'XXX', ruleName: 'YYY' },  // 后续新增赛季在此添加
+        };
+
+        // 获取赛季名（未配置时回退为"赛季 N"）
+        function getSeasonName(seasonKey) {
+            const meta = seasonMeta[String(seasonKey)];
+            return meta && meta.name ? meta.name : ('赛季 ' + seasonKey);
+        }
+
+        // 获取规则名（未配置时回退为"赛季规则"）
+        function getSeasonRuleName(seasonKey) {
+            const meta = seasonMeta[String(seasonKey)];
+            return meta && meta.ruleName ? meta.ruleName : '赛季规则';
+        }
+
         // ==================== 赛季规则功能 ====================
+        // 检测赛季数据结构：'nested'（赛季1：rule→tier→name:desc） / 'flat'（赛季2：id→{名称,效果,类型,品质,系列,子类}）
+        function getSeasonStructure(seasonKey) {
+            const data = seasonsData[seasonKey] || {};
+            const firstKey = Object.keys(data)[0];
+            if (!firstKey) return 'nested';
+            const first = data[firstKey];
+            // 扁平结构判定：第一条数据是对象且包含 "名称" 与 "效果" 字段
+            if (first && typeof first === 'object' && !Array.isArray(first)
+                && Object.prototype.hasOwnProperty.call(first, '名称')
+                && Object.prototype.hasOwnProperty.call(first, '效果')) {
+                return 'flat';
+            }
+            return 'nested';
+        }
+
+        // 类型映射（赛季2）：类型 1=系别 / 2=经济 / 3=战斗 / 4=商店
+        function getSeason2TypeLabel(type) {
+            switch (parseInt(type)) {
+                case 1: return '系别';
+                case 2: return '经济';
+                case 3: return '战斗';
+                case 4: return '商店';
+                default: return '其他';
+            }
+        }
+
+        // 品质映射（赛季2）：品质 1=普通 / 2=稀有 / 3=传说
+        function getSeason2QualityLabel(q) {
+            switch (parseInt(q)) {
+                case 1: return '普通';
+                case 2: return '稀有';
+                case 3: return '传说';
+                default: return '普通';
+            }
+        }
+
+        // 品质 → tier class（复用 .season-rule-item.tier-N 的样式）
+        function getSeason2QualityTierClass(q) {
+            const n = parseInt(q);
+            if (n === 2) return 1; // 稀有 → tier-1（金色）
+            if (n === 3) return 2; // 传说 → tier-2（彩色彩虹）
+            return 0;              // 普通 → tier-0（灰色）
+        }
+
         // 渲染赛季规则列表
         function renderSeasonList() {
             const contentCard = document.getElementById('contentCard');
+
+            // 所有赛季 key（按数字升序，用于默认选择最新赛季）
+            const seasonKeysAsc = Object.keys(seasonsData)
+                .sort((a, b) => parseInt(a) - parseInt(b));
+            // 切换栏显示顺序：从左到右越来越旧，即最新赛季在最左侧
+            const seasonKeys = [...seasonKeysAsc].reverse();
+
+            // 校正当前选中赛季（默认取最新赛季，即编号最大的）
+            if (!seasonKeysAsc.includes(String(currentSeason))) {
+                currentSeason = seasonKeysAsc.length ? seasonKeysAsc[seasonKeysAsc.length - 1] : '';
+            }
+
+            // 顶部赛季切换标签（从左到右越来越旧；最新赛季在左，且默认选中最新赛季）
+            // 最新赛季 = 编号最大的赛季
+            const latestSeasonKey = seasonKeysAsc.length ? seasonKeysAsc[seasonKeysAsc.length - 1] : '';
+            let seasonSwitcherHtml = '';
+            if (seasonKeys.length > 1) {
+                seasonSwitcherHtml = '<div class="season-switcher">';
+                seasonSwitcherHtml += '<span class="season-switcher-label">赛季：</span>';
+                seasonKeys.forEach((key) => {
+                    const activeClass = (key === String(currentSeason)) ? ' active' : '';
+                    const latestFlag = (key === latestSeasonKey) ? ' <span class="season-switcher-latest">最新</span>' : '';
+                    const seasonName = getSeasonName(key);
+                    const tabText = `赛季 ${key} · ${seasonName}`;
+                    seasonSwitcherHtml += `<div class="season-switcher-tab${activeClass}" onclick="switchSeason('${key}')" title="${escapeHtml(tabText)}">${escapeHtml(tabText)}${latestFlag}</div>`;
+                });
+                seasonSwitcherHtml += '</div>';
+            } else if (seasonKeys.length === 1) {
+                const seasonName = getSeasonName(currentSeason);
+                seasonSwitcherHtml = `<div class="season-switcher"><span class="season-switcher-label">当前赛季：</span><div class="season-switcher-tab active">赛季 ${currentSeason} · ${escapeHtml(seasonName)}</div></div>`;
+            }
+
+            // 根据数据结构分支
+            const structure = getSeasonStructure(currentSeason);
+            if (structure === 'flat') {
+                // 赛季2：扁平结构 → 走全新的扁平渲染器
+                contentCard.innerHTML = renderSeasonFlatPage(seasonSwitcherHtml);
+                return;
+            }
+
+            // 赛季1：嵌套结构 → 走 v7 原始渲染器（保持不变）
+            renderSeasonNestedList(seasonSwitcherHtml);
+        }
+
+        // 赛季1 渲染入口（v7 原始逻辑，保持不变）
+        function renderSeasonNestedList(seasonSwitcherHtml) {
+            const contentCard = document.getElementById('contentCard');
+
+            // 当前赛季的规则数据
+            const seasonData = seasonsData[currentSeason] || {};
 
             // 动态获取所有规则 key（按数字升序）
             const ruleKeys = Object.keys(seasonData)
@@ -6207,12 +6740,13 @@
             }
 
             const ruleCount = ruleKeys.length;
+            const currentSeasonRuleName = getSeasonRuleName(currentSeason);
             contentCard.innerHTML = `
-                <div class="card-list-page">
+                <div class="card-list-page season-page season-${escapeHtml(String(currentSeason))}">
                     <div class="card-list-header">
                         <div class="card-list-title">
                             <span>📜</span>
-                            赛季规则
+                            ${escapeHtml(getSeasonName(currentSeason))}·${escapeHtml(currentSeasonRuleName)}
                             <span class="card-list-title-en">SEASONS</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 12px;">
@@ -6222,10 +6756,211 @@
                             </div>
                         </div>
                     </div>
+                    ${seasonSwitcherHtml}
                     ${tabsHtml}
                     ${bodyHtml}
                 </div>
             `;
+        }
+
+        // 赛季2 渲染入口（扁平结构：每条规则带 名称/效果/类型/品质/系列/子类）
+        // 顶部：筛选按钮（参考精灵卡牌的筛选弹窗，含 品质 + 类型 两个分组）
+        // 主体：扁平卡片网格，每张卡片显示 品质徽章 + 类型 + 名称 + 子类 + 效果
+        function renderSeasonFlatPage(seasonSwitcherHtml) {
+            const seasonData = seasonsData[currentSeason] || {};
+
+            // 收集所有规则并按 id 升序
+            const allRules = Object.keys(seasonData)
+                .sort((a, b) => parseInt(a) - parseInt(b))
+                .map(id => ({ id, ...seasonData[id] }));
+
+            // 筛选状态：season2FilterState = { qualities: [], types: [] }
+            // qualities: 1=普通 / 2=稀有 / 3=传说
+            // types: 1=系别 / 2=经济 / 3=战斗 / 4=商店
+            const fs = season2FilterState || { qualities: [], types: [] };
+            let filteredRules = allRules.slice();
+            if (fs.qualities.length > 0) {
+                filteredRules = filteredRules.filter(r => fs.qualities.includes(parseInt(r['品质'])));
+            }
+            if (fs.types.length > 0) {
+                filteredRules = filteredRules.filter(r => fs.types.includes(parseInt(r['类型'])));
+            }
+
+            // 当前筛选条件摘要
+            const activeCount = fs.qualities.length + fs.types.length;
+            const filterBtnLabel = activeCount > 0 ? `🔍 筛选 (${activeCount})` : '🔍 筛选';
+
+            // 主体：扁平卡片网格
+            const bodyHtml = renderSeasonFlatBody(filteredRules);
+
+            const totalCount = allRules.length;
+            const shownCount = filteredRules.length;
+            const countText = (activeCount > 0)
+                ? `显示 ${shownCount} / ${totalCount} 条`
+                : `共 ${totalCount} 条规则`;
+
+            const currentSeasonRuleName = getSeasonRuleName(currentSeason);
+            return `
+                <div class="card-list-page season-page season-2">
+                    <div class="card-list-header">
+                        <div class="card-list-title">
+                            <span>📜</span>
+                            ${escapeHtml(getSeasonName(currentSeason))}·${escapeHtml(currentSeasonRuleName)}
+                            <span class="card-list-title-en">SEASONS</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <button class="filter-btn" onclick="openSeason2FilterModal()">${filterBtnLabel}</button>
+                            <div class="card-list-title">
+                                <span>${countText}</span>
+                            </div>
+                        </div>
+                    </div>
+                    ${seasonSwitcherHtml}
+                    ${bodyHtml}
+                </div>
+            `;
+        }
+
+        // 赛季2 主体：扁平卡片网格
+        function renderSeasonFlatBody(rules) {
+            if (!rules || rules.length === 0) {
+                return '<div class="season-empty" style="padding:40px;">暂无符合条件的规则</div>';
+            }
+            return `<div class="season-flat-list">${rules.map(renderSeasonFlatCard).join('')}</div>`;
+        }
+
+        // 赛季2 单张规则卡片
+        function renderSeasonFlatCard(rule) {
+            const name = rule['名称'] || '未命名';
+            const effect = rule['效果'] || '';
+            const quality = parseInt(rule['品质']) || 1;
+            const qualityLabel = getSeason2QualityLabel(quality);
+            const tierClass = getSeason2QualityTierClass(quality);
+            const subType = rule['子类'] || '';
+            const seriesId = rule['系列'] || '';
+            const typeLabel = getSeason2TypeLabel(rule['类型']);
+
+            return `
+                <div class="season-flat-card quality-${quality}">
+                    <div class="season-flat-card-tag-row">
+                        <span class="season-flat-quality-badge quality-${quality}">${escapeHtml(qualityLabel)}</span>
+                        <span class="season-flat-type-tag">${escapeHtml(typeLabel)}</span>
+                    </div>
+                    <div class="season-flat-card-name">${escapeHtml(name)}</div>
+                    <div class="season-flat-card-meta">
+                        ${subType ? `<span class="season-flat-sub">${escapeHtml(subType)}</span>` : ''}
+                        <span class="season-flat-series">系列 ${escapeHtml(String(seriesId))}</span>
+                    </div>
+                    <div class="season-flat-card-effect">${escapeHtml(effect)}</div>
+                </div>
+            `;
+        }
+
+        // ==================== 赛季2 筛选弹窗 ====================
+        // 打开筛选弹窗
+        function openSeason2FilterModal() {
+            const modal = document.getElementById('season2FilterModal');
+            const qualityGrid = document.getElementById('season2FilterQualityGrid');
+            const typeGrid = document.getElementById('season2FilterTypeGrid');
+
+            const fs = season2FilterState || { qualities: [], types: [] };
+
+            // 品质选项
+            const qualityOptions = [
+                { key: 1, label: '普通' },
+                { key: 2, label: '稀有' },
+                { key: 3, label: '传说' },
+            ];
+            let qualityHtml = '';
+            qualityOptions.forEach(q => {
+                const isActive = fs.qualities.includes(q.key);
+                qualityHtml += `<button class="filter-grid-btn season2-filter-btn quality-${q.key} ${isActive ? 'active' : ''}" onclick="toggleSeason2QualityFilter(${q.key})">
+                    <span class="season2-filter-quality-dot quality-${q.key}"></span>
+                    <span>${q.label}</span>
+                </button>`;
+            });
+            qualityGrid.innerHTML = qualityHtml;
+
+            // 类型选项
+            const typeOptions = [
+                { key: 1, label: '系别' },
+                { key: 2, label: '经济' },
+                { key: 3, label: '战斗' },
+                { key: 4, label: '商店' },
+            ];
+            let typeHtml = '';
+            typeOptions.forEach(t => {
+                const isActive = fs.types.includes(t.key);
+                typeHtml += `<button class="filter-grid-btn season2-filter-btn ${isActive ? 'active' : ''}" onclick="toggleSeason2TypeFilter(${t.key})">
+                    <span>${t.label}</span>
+                </button>`;
+            });
+            typeGrid.innerHTML = typeHtml;
+
+            modal.classList.add('active');
+        }
+
+        // 关闭筛选弹窗
+        function closeSeason2FilterModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('season2FilterModal').classList.remove('active');
+        }
+
+        // 切换品质筛选
+        function toggleSeason2QualityFilter(q) {
+            const idx = season2FilterState.qualities.indexOf(q);
+            if (idx > -1) {
+                season2FilterState.qualities.splice(idx, 1);
+            } else {
+                season2FilterState.qualities.push(q);
+            }
+            openSeason2FilterModal();
+        }
+
+        // 切换类型筛选
+        function toggleSeason2TypeFilter(t) {
+            const idx = season2FilterState.types.indexOf(t);
+            if (idx > -1) {
+                season2FilterState.types.splice(idx, 1);
+            } else {
+                season2FilterState.types.push(t);
+            }
+            openSeason2FilterModal();
+        }
+
+        // 重置筛选
+        function resetSeason2Filters() {
+            season2FilterState.qualities = [];
+            season2FilterState.types = [];
+            openSeason2FilterModal();
+        }
+
+        // 应用筛选
+        function applySeason2Filters() {
+            closeSeason2FilterModal();
+            renderSeasonList();
+        }
+
+        // 切换赛季（赛季切换标签点击）
+        function switchSeason(seasonKey) {
+            currentSeason = String(seasonKey);
+            // 切换赛季时重置筛选、规则、层级
+            season2FilterState = { qualities: [], types: [] };
+            const structure = getSeasonStructure(currentSeason);
+            if (structure === 'flat') {
+                // 扁平结构：重置筛选即可
+                currentSeasonRule = '';
+                currentSeasonTier = '';
+            } else {
+                // 嵌套结构：重置规则和层级为该赛季的第一条规则的第一层级
+                const seasonData = seasonsData[currentSeason] || {};
+                const rules = Object.keys(seasonData).sort((a, b) => parseInt(a) - parseInt(b));
+                currentSeasonRule = rules.length ? rules[0] : '';
+                const rule = seasonData[currentSeasonRule] || {};
+                const tiers = Object.keys(rule).sort((a, b) => parseInt(a) - parseInt(b));
+                currentSeasonTier = tiers.length ? tiers[0] : '';
+            }
+            renderSeasonList();
         }
 
         // 导航栏模式主体：左侧层级导航 + 右侧当前层级内容
@@ -6368,9 +7103,19 @@
             `;
         }
 
-        // 根据层级 key 生成标签：'0' -> '基础规则', '1' -> '1级规则', '2' -> '2级规则' ...
+        // 根据层级 key 生成标签：
+        // 赛季1（v7 原样）：'0' -> '基础规则', '1' -> '1级规则', '2' -> '2级规则' ...
+        // 赛季2（新规范）：'0' -> '普通', '1' -> '稀有', '2' -> '传说'
+        //   品质从低到高：普通（灰）、稀有（金）、传说（彩）
         function getSeasonTierLabel(tierKey) {
             const n = parseInt(tierKey);
+            if (String(currentSeason) === '2') {
+                if (isNaN(n) || n === 0) return '普通';
+                if (n === 1) return '稀有';
+                if (n === 2) return '传说';
+                return n + '级规则';
+            }
+            // 赛季1 默认（保持 v7 原始）
             if (isNaN(n) || n === 0) return '基础规则';
             return n + '级规则';
         }
@@ -6379,6 +7124,7 @@
         function switchSeasonRule(key) {
             currentSeasonRule = String(key);
             // 切换规则时重置层级为该规则的第一个层级
+            const seasonData = seasonsData[currentSeason] || {};
             const rule = seasonData[currentSeasonRule] || {};
             const tiers = Object.keys(rule).sort((a, b) => parseInt(a) - parseInt(b));
             currentSeasonTier = tiers.length ? tiers[0] : '';
