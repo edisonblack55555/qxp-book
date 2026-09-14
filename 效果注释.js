@@ -25,18 +25,38 @@ var Effect_Data={
         "Icon": "effectIcon_5"
     },
     "6": {
+        "Name": "生长",
+        "Effect": "商店开始阶段触发对应效果",
+        "Icon": "effectIcon_7"
+    },
+    "7": {
+        "Name": "寒潮",
+        "Effect": "冰系精灵达成条件后增加层数，达到指定层数后触发对应效果",
+        "Icon": "effectIcon_8"
+    },
+    "8": {
         "Name": "嘲讽",
         "Effect": "对方精灵必须优先攻击带有嘲讽的精灵",
         "Icon": "effectIcon_11"
     },
-    "7": {
+    "9": {
         "Name": "护盾",
         "Effect": "可以抵消受到的首次伤害",
         "Icon": "effectIcon_12"
     },
-    "8": {
+    "10": {
         "Name": "吸附",
         "Effect": "放置于机械系精灵左侧时将属性值和特效附加给该精灵",
         "Icon": ""
+    },
+    "11": {
+        "Name": "冻伤",
+        "Effect": "攻击前与己方下一个没有冻伤的精灵交换位置，并由该精灵发动攻击",
+        "Icon": "effectIcon_13"
+    },
+    "12": {
+        "Name": "冰封",
+        "Effect": "下个攻击轮次无法行动",
+        "Icon": "effectIcon_14"
     }
 }

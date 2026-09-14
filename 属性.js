@@ -27,6 +27,10 @@ var Type_Data={
         "Name_cn": "地面",
         "Name": "ground"
     },
+    "9": {
+        "Name_cn": "冰",
+        "Name": "ice"
+    },
     "15": {
         "Name_cn": "龙",
         "Name": "dragon"
